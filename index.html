@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Syed Ali Raza Digital Payments — Karsal, Chakwal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#050914;
+    --void-2:#0a1226;
+    --void-3:#0d1730;
+    --glass: rgba(255,255,255,0.055);
+    --glass-strong: rgba(255,255,255,0.09);
+    --glass-border: rgba(255,255,255,0.14);
+    --mint:#00f5a0;
+    --mint-dim: rgba(0,245,160,0.35);
+    --gold:#ffb020;
+    --gold-dim: rgba(255,176,32,0.35);
+    --violet:#8b6bff;
+    --ink:#eaf2ff;
+    --ink-dim:#9fb0d0;
+    --ink-dimmer:#6c7a99;
+    --danger:#ff5470;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:
+      radial-gradient(ellipse 1200px 800px at 15% -10%, rgba(139,107,255,0.16), transparent 60%),
+      radial-gradient(ellipse 1000px 700px at 100% 10%, rgba(0,245,160,0.10), transparent 55%),
+      radial-gradient(ellipse 900px 900px at 50% 100%, rgba(255,176,32,0.08), transparent 55%),
+      var(--void);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, black 20%, transparent 75%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .display{font-family:'Orbitron', sans-serif;}
+  .mono{font-family:'JetBrains Mono', monospace;}
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+  img{display:block; width:100%; height:100%; object-fit:cover;}
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  ::selection{background:var(--mint-dim); color:#fff;}
+
+  /* ---------- glass utility ---------- */
+  .glass{
+    background:linear-gradient(155deg, var(--glass-strong), var(--glass) 60%);
+    border:1px solid var(--glass-border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-radius:22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .glass::after{
+    content:"";
+    position:absolute; top:0; left:-10%; right:-10%; height:1px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+  }
+  .glass::before{
+    content:"";
+    position:absolute; top:-40%; left:-20%; width:70%; height:120%;
+    background:linear-gradient(120deg, rgba(255,255,255,0.10), transparent 60%);
+    transform:rotate(8deg);
+    pointer-events:none;
+  }
+
+  /* =============== NAV =============== */
+  header{
+    position:sticky; top:0; z-index:50;
+    padding:16px 0;
+  }
+  .navbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 22px;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand-mark{
+    width:42px; height:42px; border-radius:12px;
+    background:conic-gradient(from 210deg, var(--mint), var(--violet), var(--gold), var(--mint));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 24px rgba(0,245,160,0.35);
+    flex-shrink:0;
+  }
+  .brand-mark span{
+    width:32px; height:32px; border-radius:9px; background:var(--void);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Orbitron'; font-weight:800; font-size:15px; color:var(--mint);
+  }
+  .brand-text .name{font-family:'Orbitron'; font-weight:700; font-size:15px; letter-spacing:0.5px;}
+  .brand-text .tag{font-size:11px; color:var(--ink-dimmer); letter-spacing:1.5px; text-transform:uppercase; margin-top:1px;}
+
+  nav.links{display:flex; gap:28px; font-size:14px; color:var(--ink-dim);}
+  nav.links a{transition:color .2s;}
+  nav.links a:hover{color:var(--mint);}
+
+  .call-btn{
+    display:flex; align-items:center; gap:8px;
+    padding:10px 18px; border-radius:100px;
+    background:linear-gradient(135deg, var(--mint), #00c98a);
+    color:#04140d; font-weight:600; font-size:13.5px;
+    box-shadow:0 0 0 1px rgba(0,245,160,0.4), 0 8px 24px rgba(0,245,160,0.25);
+    white-space:nowrap;
+  }
+
+  .menu-toggle{display:none;}
+
+  /* =============== HERO =============== */
+  .hero{
+    padding:64px 0 40px;
+    display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:7px 14px; border-radius:100px;
+    font-size:11.5px; letter-spacing:1.6px; text-transform:uppercase;
+    color:var(--mint); margin-bottom:22px;
+  }
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--mint); box-shadow:0 0 10px var(--mint); animation:pulse 1.8s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+
+  h1.hero-title{
+    font-family:'Orbitron'; font-weight:800;
+    font-size:clamp(34px, 4.4vw, 54px);
+    line-height:1.12; letter-spacing:-0.5px;
+    margin-bottom:22px;
+  }
+  h1.hero-title .grad{
+    background:linear-gradient(100deg, var(--mint), #7fffd4 30%, var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{
+    font-size:16.5px; line-height:1.75; color:var(--ink-dim); max-width:520px; margin-bottom:30px;
+  }
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:34px;}
+  .btn-primary, .btn-ghost{
+    padding:15px 26px; border-radius:14px; font-weight:600; font-size:14.5px;
+    display:inline-flex; align-items:center; gap:10px; transition:transform .2s, box-shadow .2s;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--mint), #00b385);
+    color:#03130c;
+    box-shadow:0 12px 30px rgba(0,245,160,0.28), inset 0 1px 0 rgba(255,255,255,0.5);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,245,160,0.4);}
+  .btn-ghost{
+    background:var(--glass); border:1px solid var(--glass-border); color:var(--ink);
+    backdrop-filter:blur(10px);
+  }
+  .btn-ghost:hover{border-color:var(--gold-dim); transform:translateY(-2px);}
+
+  .hero-meta{display:flex; gap:26px; flex-wrap:wrap;}
+  .hero-meta .item{display:flex; align-items:center; gap:9px; font-size:13px; color:var(--ink-dimmer);}
+  .hero-meta svg{width:16px; height:16px; stroke:var(--mint); flex-shrink:0;}
+
+  /* Hero hologram */
+  .holo-stage{
+    position:relative; aspect-ratio:1/1; max-width:300px; margin:30px auto 0;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .holo-ring{
+    position:absolute; border-radius:50%;
+    border:1px solid rgba(0,245,160,0.28);
+  }
+  .r1{width:100%; height:100%; animation:spin 34s linear infinite;}
+  .r2{width:78%; height:78%; border-color:rgba(139,107,255,0.28); animation:spin 26s linear infinite reverse;}
+  .r3{width:56%; height:56%; border-color:rgba(255,176,32,0.3); border-style:dashed; animation:spin 40s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .holo-core{
+    width:44%; aspect-ratio:1/1; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, rgba(0,245,160,0.5), rgba(139,107,255,0.25) 55%, rgba(5,9,20,0.9) 78%);
+    box-shadow:0 0 90px rgba(0,245,160,0.35), inset 0 0 60px rgba(0,245,160,0.25);
+    display:flex; align-items:center; justify-content:center;
+    animation:float 5s ease-in-out infinite;
+    position:relative;
+  }
+  @keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-10px);}}
+  .holo-core span{
+    font-family:'Orbitron'; font-weight:900; font-size:clamp(30px,5vw,42px);
+    color:#fff; text-shadow:0 0 24px rgba(0,245,160,0.8);
+  }
+
+  /* Service chips — static row under the hologram, never overlapping */
+  .holo-chip-row{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+    max-width:420px; margin:26px auto 0;
+  }
+  .holo-chip{
+    padding:9px 15px; border-radius:100px;
+    font-size:12px; font-weight:600; letter-spacing:0.3px;
+    display:inline-flex; align-items:center; gap:8px;
+    white-space:nowrap;
+    cursor:pointer; transition:transform .2s, border-color .2s, box-shadow .2s;
+    animation:chipfloat 3.6s ease-in-out infinite;
+  }
+  .holo-chip:nth-child(2){animation-delay:.4s;}
+  .holo-chip:nth-child(3){animation-delay:.8s;}
+  .holo-chip:nth-child(4){animation-delay:1.2s;}
+  @keyframes chipfloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+  .holo-chip:hover{transform:translateY(-4px) scale(1.05); border-color:rgba(0,245,160,0.5); box-shadow:0 10px 26px rgba(0,0,0,0.35);}
+  .holo-chip .dot2{width:6px;height:6px;border-radius:50%; flex-shrink:0;}
+
+  section{scroll-margin-top:90px;}
+
+  /* =============== TICKER =============== */
+  .ticker-outer{padding:0 0 8px;}
+  .ticker-wrap{
+    border-radius:100px;
+    background:linear-gradient(155deg, var(--glass-strong), var(--glass) 60%);
+    border:1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:0 20px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.12);
+    overflow:hidden; padding:14px 0; position:relative;
+  }
+  .ticker-wrap::before{
+    content:""; position:absolute; inset:0; z-index:0;
+    background:linear-gradient(90deg, rgba(0,245,160,0.10), rgba(139,107,255,0.10), rgba(255,176,32,0.10));
+  }
+  .ticker-wrap::after{
+    content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(90deg, var(--void) 0%, transparent 8%, transparent 92%, var(--void) 100%);
+    opacity:0.9;
+  }
+  .ticker-track{display:flex; gap:48px; width:max-content; animation:ticker 32s linear infinite; position:relative; z-index:1;}
+  .ticker-track span{
+    font-family:'JetBrains Mono'; font-size:12.5px; letter-spacing:0.5px; color:var(--ink-dim);
+    display:flex; align-items:center; gap:10px; white-space:nowrap;
+  }
+  .ticker-track span b{color:var(--mint); font-weight:600;}
+  @keyframes ticker{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  /* =============== SECTION SHARED =============== */
+  section{padding:96px 0;}
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .kicker{
+    font-family:'JetBrains Mono'; font-size:12px; letter-spacing:3px; text-transform:uppercase;
+    color:var(--gold); margin-bottom:14px; display:block;
+  }
+  h2{
+    font-family:'Orbitron'; font-weight:700; font-size:clamp(26px,3.4vw,38px); line-height:1.2; margin-bottom:16px;
+  }
+  .section-head p{color:var(--ink-dim); font-size:15.5px; line-height:1.75;}
+
+  /* =============== ABOUT =============== */
+  .about{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:46px; align-items:center;
+  }
+  .about-card{
+    padding:38px; text-align:center;
+  }
+  .avatar{
+    width:118px; height:118px; border-radius:50%; margin:0 auto 20px;
+    background:conic-gradient(from 140deg, var(--mint), var(--violet), var(--gold), var(--mint));
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 50px rgba(0,245,160,0.25);
+  }
+  .avatar span{
+    width:104px; height:104px; border-radius:50%; background:var(--void-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Orbitron'; font-weight:800; font-size:34px; color:var(--mint);
+  }
+  .about-card h3{font-family:'Orbitron'; font-size:19px; margin-bottom:6px;}
+  .about-card .role{color:var(--ink-dimmer); font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:22px;}
+  .about-card .locrow{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    font-size:13.5px; color:var(--ink-dim); padding-top:18px; border-top:1px solid var(--glass-border);
+  }
+  .about-card .locrow svg{width:16px; height:16px; stroke:var(--gold);}
+
+  .about-copy p{color:var(--ink-dim); font-size:15.5px; line-height:1.85; margin-bottom:18px;}
+  .about-copy p b{color:var(--ink); font-weight:600;}
+  .pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;}
+  .pillar{padding:18px 16px; text-align:center;}
+  .pillar .num{font-family:'Orbitron'; font-weight:800; font-size:22px; color:var(--mint); display:block; margin-bottom:4px;}
+  .pillar .lab{font-size:11.5px; color:var(--ink-dimmer); letter-spacing:0.5px;}
+
+  /* =============== SERVICES =============== */
+  .grid-services{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  .svc-card{
+    padding:30px 26px; transition:transform .25s, box-shadow .25s, border-color .25s;
+    scroll-margin-top:110px;
+  }
+  .svc-card:target{
+    border-color:rgba(0,245,160,0.6);
+    box-shadow:0 0 0 1px rgba(0,245,160,0.3), 0 20px 44px rgba(0,245,160,0.18);
+    animation:targetPulse 1.6s ease;
+  }
+  @keyframes targetPulse{0%{box-shadow:0 0 0 0 rgba(0,245,160,0.45);}100%{box-shadow:0 0 0 14px rgba(0,245,160,0);}}
+  .svc-card:hover{transform:translateY(-6px); border-color:rgba(0,245,160,0.35); box-shadow:0 20px 44px rgba(0,0,0,0.35);}
+  .svc-icon{
+    width:54px; height:54px; border-radius:15px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(145deg, rgba(0,245,160,0.16), rgba(139,107,255,0.10));
+    border:1px solid rgba(0,245,160,0.25);
+  }
+  .svc-icon svg{width:26px; height:26px; stroke:var(--mint); fill:none; stroke-width:1.6;}
+  .svc-card h3{font-family:'Orbitron'; font-size:16.5px; margin-bottom:12px; letter-spacing:0.2px;}
+  .svc-card p{color:var(--ink-dim); font-size:14px; line-height:1.75;}
+  .svc-tag{
+    display:inline-block; margin-top:16px; padding:5px 12px; border-radius:100px;
+    font-family:'JetBrains Mono'; font-size:10.5px; letter-spacing:0.5px;
+    background:rgba(255,176,32,0.12); color:var(--gold); border:1px solid rgba(255,176,32,0.3);
+  }
+
+  /* =============== PROCESS =============== */
+  .process{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px; counter-reset:step;
+  }
+  .step{padding:28px 22px; position:relative;}
+  .step .stepnum{
+    font-family:'Orbitron'; font-weight:800; font-size:13px; color:var(--void);
+    width:34px; height:34px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, var(--mint), var(--gold)); margin-bottom:18px;
+  }
+  .step h4{font-family:'Orbitron'; font-size:14.5px; margin-bottom:10px;}
+  .step p{color:var(--ink-dim); font-size:13.3px; line-height:1.7;}
+
+  /* =============== TRUST / WHY =============== */
+  .why-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  .why-card{padding:26px; display:flex; gap:16px; align-items:flex-start;}
+  .why-card .ic{
+    width:42px; height:42px; border-radius:12px; flex-shrink:0;
+    background:rgba(139,107,255,0.14); border:1px solid rgba(139,107,255,0.35);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .why-card .ic svg{width:20px; height:20px; stroke:var(--violet); fill:none; stroke-width:1.6;}
+  .why-card h4{font-family:'Orbitron'; font-size:14.5px; margin-bottom:8px;}
+  .why-card p{color:var(--ink-dim); font-size:13.5px; line-height:1.7;}
+
+  /* =============== VILLAGE / LOCATION =============== */
+  .locality{
+    border-radius:28px; overflow:hidden; position:relative; min-height:420px;
+    display:flex; align-items:flex-end;
+    border:1px solid var(--glass-border);
+  }
+  .locality img{position:absolute; inset:0; z-index:0; filter:saturate(1.05) brightness(0.55);}
+  .locality::before{
+    content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(0deg, rgba(5,9,20,0.96) 8%, rgba(5,9,20,0.55) 55%, rgba(5,9,20,0.25) 100%),
+               linear-gradient(100deg, rgba(0,245,160,0.14), transparent 45%);
+  }
+  .locality-content{position:relative; z-index:2; padding:44px; width:100%;}
+  .locality-content .kicker{color:var(--mint);}
+  .locality-content h2{max-width:520px;}
+  .locality-content p{color:var(--ink-dim); max-width:460px; font-size:14.5px; line-height:1.8; margin-bottom:22px;}
+  .locality-badges{display:flex; gap:12px; flex-wrap:wrap;}
+  .locality-badges span{
+    padding:8px 15px; border-radius:100px; font-size:12px;
+    background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(6px);
+  }
+
+  /* =============== FAQ =============== */
+  .faq-item{padding:24px 28px; margin-bottom:14px; cursor:pointer;}
+  .faq-item summary{
+    list-style:none; display:flex; align-items:center; justify-content:space-between;
+    font-family:'Space Grotesk'; font-weight:600; font-size:15px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary .plus{
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--glass-border);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-left:16px;
+    font-size:16px; color:var(--mint); transition:transform .25s;
+  }
+  .faq-item[open] summary .plus{transform:rotate(45deg);}
+  .faq-item p{color:var(--ink-dim); font-size:14px; line-height:1.75; margin-top:16px; padding-right:40px;}
+
+  /* =============== CONTACT / FOOTER =============== */
+  .contact-panel{
+    padding:52px; display:grid; grid-template-columns:1.1fr 0.9fr; gap:46px; align-items:center;
+  }
+  .contact-panel h2{max-width:420px;}
+  .contact-panel > div > p{color:var(--ink-dim); font-size:15px; line-height:1.8; margin-bottom:26px; max-width:440px;}
+  .contact-line{display:flex; align-items:center; gap:14px; margin-bottom:16px;}
+  .contact-line .ic{
+    width:40px; height:40px; border-radius:12px; flex-shrink:0;
+    background:rgba(0,245,160,0.14); border:1px solid rgba(0,245,160,0.3);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .contact-line .ic svg{width:18px; height:18px; stroke:var(--mint); fill:none; stroke-width:1.6;}
+  .contact-line .lab{font-size:11px; letter-spacing:1px; text-transform:uppercase; color:var(--ink-dimmer); margin-bottom:2px;}
+  .contact-line .val{font-family:'JetBrains Mono'; font-size:15px;}
+
+  .contact-cta{padding:34px; text-align:center;}
+  .contact-cta .big-num{
+    font-family:'Orbitron'; font-weight:800; font-size:26px; margin:18px 0 6px;
+    background:linear-gradient(100deg, var(--mint), var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .contact-cta .sub{color:var(--ink-dimmer); font-size:12.5px; margin-bottom:26px;}
+  .contact-cta .btn-primary, .contact-cta .btn-ghost{width:100%; justify-content:center; margin-bottom:12px;}
+
+  .map-frame{border-radius:20px; overflow:hidden; border:1px solid var(--glass-border); height:280px; margin-top:56px;}
+  .map-frame iframe{width:100%; height:100%; border:0; filter:grayscale(0.35) invert(0.92) contrast(0.9);}
+
+  footer{padding:40px 0 90px; text-align:center;}
+  footer .fbrand{font-family:'Orbitron'; font-weight:700; font-size:14px; margin-bottom:10px;}
+  footer p{color:var(--ink-dimmer); font-size:12.5px; line-height:1.8;}
+
+  /* Floating WhatsApp */
+  .float-wa{
+    position:fixed; bottom:26px; right:26px; z-index:60;
+    width:60px; height:60px; border-radius:50%;
+    background:linear-gradient(135deg, var(--mint), #00c98a);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 30px rgba(0,245,160,0.45), 0 0 0 6px rgba(0,245,160,0.1);
+    animation:float 3s ease-in-out infinite;
+  }
+  .float-wa svg{width:28px; height:28px; fill:#04140d;}
+
+  /* =============== RESPONSIVE =============== */
+  @media (max-width:960px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:36px;}
+    .hero-visual{order:-1;}
+    .holo-stage{max-width:260px; margin:20px auto 0;}
+    .about{grid-template-columns:1fr;}
+    .grid-services{grid-template-columns:repeat(2,1fr);}
+    .process{grid-template-columns:repeat(2,1fr);}
+    .why-grid{grid-template-columns:1fr;}
+    .contact-panel{grid-template-columns:1fr; padding:32px;}
+  }
+  @media (max-width:600px){
+    .wrap{padding:0 18px;}
+    .grid-services{grid-template-columns:1fr;}
+    .process{grid-template-columns:1fr;}
+    .navbar{padding:10px 14px;}
+    .holo-stage{max-width:210px; margin:14px auto 0;}
+    .holo-chip{padding:7px 12px; font-size:10.5px; gap:6px;}
+    .brand-text .tag{display:none;}
+    section{padding:64px 0;}
+    .locality-content{padding:26px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<header>
+  <div class="wrap">
+    <div class="navbar glass">
+      <div class="brand">
+        <div class="brand-mark"><span>SR</span></div>
+        <div class="brand-text">
+          <div class="name">SYED ALI RAZA</div>
+          <div class="tag">Digital Payments · Karsal, Chakwal</div>
+        </div>
+      </div>
+      <nav class="links">
+        <a href="#services">Services</a>
+        <a href="#process">How it works</a>
+        <a href="#why">Why us</a>
+        <a href="#location">Location</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="call-btn" href="tel:03400863386">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#04140d" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        0340&#8209;0863386
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<div class="wrap">
+  <section class="hero" style="padding-top:36px;">
+    <div>
+      <div class="eyebrow glass" style="padding:7px 14px;"><span class="dot"></span> Trusted local payments point · Karsal, Chakwal</div>
+      <h1 class="hero-title">Every payment,<br><span class="grad">handled instantly.</span></h1>
+      <p class="lede">Easypaisa, JazzCash, bank transfers, bill payments, loans and every other online transaction — all done at one counter in Karsal, by someone your village already knows and trusts: Syed Ali Raza. Can't visit? Home-to-home service brings it to your door.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="tel:03400863386">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#03130c" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call Now
+        </a>
+        <a class="btn-ghost" href="https://wa.me/923400863386" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="var(--mint)"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.75 13.4L3 21l3.72-1.24a8.9 8.9 0 0 0 4.33 1.12A8.94 8.94 0 0 0 20 12.93a8.86 8.86 0 0 0-2.4-6.6zm-5.55 13.53a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.24.75.75-2.18-.18-.28a7.42 7.42 0 1 1 13.8-3.8 7.4 7.4 0 0 1-8.08 6.71zm4.06-5.55c-.22-.11-1.31-.65-1.51-.72-.2-.08-.35-.11-.5.11s-.57.72-.7.87-.26.17-.48.06a6.07 6.07 0 0 1-1.78-1.1 6.7 6.7 0 0 1-1.23-1.53c-.13-.22 0-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37a.4.4 0 0 0 0-.39c-.06-.11-.5-1.2-.68-1.65-.18-.43-.36-.37-.5-.38h-.43a.82.82 0 0 0-.6.28 2.5 2.5 0 0 0-.78 1.86 4.35 4.35 0 0 0 .91 2.3 9.94 9.94 0 0 0 3.81 3.37c.53.23.95.36 1.27.47.53.17 1.02.14 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.04-.05-.1-.2-.15-.42-.26z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <div class="hero-meta">
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+          Karsal, Chakwal, Punjab
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+          Open daily for walk-in service
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+          Cash & digital, done on the spot
+        </div>
+        <div class="item">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+          Home-to-home visits available
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="holo-stage">
+        <div class="holo-ring r1"></div>
+        <div class="holo-ring r2"></div>
+        <div class="holo-ring r3"></div>
+        <div class="holo-core"><span>&#8360;</span></div>
+      </div>
+      <div class="holo-chip-row">
+        <a class="holo-chip glass" href="#svc-easypaisa"><span class="dot2" style="background:var(--mint);box-shadow:0 0 8px var(--mint);"></span>Easypaisa</a>
+        <a class="holo-chip glass" href="#svc-jazzcash"><span class="dot2" style="background:var(--violet);box-shadow:0 0 8px var(--violet);"></span>JazzCash</a>
+        <a class="holo-chip glass" href="#svc-bank"><span class="dot2" style="background:var(--gold);box-shadow:0 0 8px var(--gold);"></span>Bank Transfer</a>
+        <a class="holo-chip glass" href="#svc-bills"><span class="dot2" style="background:#ff8fa3;box-shadow:0 0 8px #ff8fa3;"></span>Bill Pay</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= TICKER ================= -->
+<div class="wrap ticker-outer">
+ <div class="ticker-wrap">
+  <div class="ticker-track">
+    <span><b>&#9679;</b> EASYPAISA TRANSFERS</span>
+    <span><b>&#9679;</b> JAZZCASH TRANSFERS</span>
+    <span><b>&#9679;</b> BANK TO BANK PAYMENTS</span>
+    <span><b>&#9679;</b> ELECTRICITY &amp; GAS BILLS</span>
+    <span><b>&#9679;</b> MOBILE LOANS &amp; ADVANCES</span>
+    <span><b>&#9679;</b> CASH DEPOSIT &amp; WITHDRAWAL</span>
+    <span><b>&#9679;</b> ALL ONLINE PAYMENT SERVICES</span>
+    <span><b>&#9679;</b> HOME-TO-HOME VISIT SERVICE</span>
+    <!-- duplicate for seamless loop -->
+    <span><b>&#9679;</b> EASYPAISA TRANSFERS</span>
+    <span><b>&#9679;</b> JAZZCASH TRANSFERS</span>
+    <span><b>&#9679;</b> BANK TO BANK PAYMENTS</span>
+    <span><b>&#9679;</b> ELECTRICITY &amp; GAS BILLS</span>
+    <span><b>&#9679;</b> MOBILE LOANS &amp; ADVANCES</span>
+    <span><b>&#9679;</b> CASH DEPOSIT &amp; WITHDRAWAL</span>
+    <span><b>&#9679;</b> ALL ONLINE PAYMENT SERVICES</span>
+    <span><b>&#9679;</b> HOME-TO-HOME VISIT SERVICE</span>
+  </div>
+ </div>
+</div>
+
+<!-- ================= ABOUT ================= -->
+<div class="wrap">
+  <section class="about" id="about">
+    <div class="about-card glass">
+      <div class="avatar"><span>SR</span></div>
+      <h3>Syed Ali Raza</h3>
+      <div class="role">Owner &amp; Operator</div>
+      <div class="locrow">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg>
+        Karsal, Chakwal
+      </div>
+    </div>
+    <div class="about-copy">
+      <span class="kicker">About the counter</span>
+      <h2>A familiar face, running a modern payments desk.</h2>
+      <p><b>Syed Ali Raza</b> runs Karsal's digital payments counter — the place villagers come to send money, pay a bill, or settle a loan installment without a trip into the city. It's built on the same trust as any local shop: your name, your account, your money, handled by someone who lives here too.</p>
+      <p>Behind the counter, everything runs on the same rails as the banks and telecom apps you already use — <b>Easypaisa</b>, <b>JazzCash</b> and direct bank networks — so every transaction is confirmed with a receipt or SMS, the same way it would be anywhere else. The difference is you don't need a smartphone, a bank branch, or a queue to use it.</p>
+      <div class="pillars">
+        <div class="pillar glass"><span class="num">6+</span><span class="lab">Services Offered</span></div>
+        <div class="pillar glass"><span class="num">100%</span><span class="lab">Local &amp; Trusted</span></div>
+        <div class="pillar glass"><span class="num">1</span><span class="lab">Counter, Every Need</span></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<div class="wrap">
+  <section id="services">
+    <div class="section-head">
+      <span class="kicker">Services</span>
+      <h2>Everything your money needs, under one roof.</h2>
+      <p>From sending a few thousand rupees to a relative, to clearing your monthly electricity bill or taking out a short-term loan — each service below is handled in person, with a clear receipt for every transaction.</p>
+    </div>
+
+    <div class="grid-services">
+
+      <div class="svc-card glass" id="svc-easypaisa">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></div>
+        <h3>Easypaisa</h3>
+        <p>Send and receive money instantly through Easypaisa — cash-in, cash-out, mobile top-ups, and account-to-account transfers. Ideal for families receiving remittances or paying school fees without owning a smartphone.</p>
+        <span class="svc-tag">Instant transfer</span>
+      </div>
+
+      <div class="svc-card glass" id="svc-jazzcash">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v2h18V7z"/><path d="M5 11v7M9 11v7M15 11v7M19 11v7"/><path d="M3 21h18"/></svg></div>
+        <h3>JazzCash</h3>
+        <p>Full JazzCash support alongside Easypaisa, so no one is turned away because of which network they use. Cash deposits, withdrawals, mobile account transfers and airtime — all processed the same day.</p>
+        <span class="svc-tag">Same-day service</span>
+      </div>
+
+      <div class="svc-card glass" id="svc-bank">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 16h5"/><circle cx="8" cy="8" r="1"/></svg></div>
+        <h3>Bank Payments</h3>
+        <p>Deposit or transfer directly into any bank account across Pakistan. Useful for tuition fees, business payments, or sending money to a bank account when the recipient doesn't use mobile wallets at all.</p>
+        <span class="svc-tag">Nationwide reach</span>
+      </div>
+
+      <div class="svc-card glass" id="svc-bills">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg></div>
+        <h3>Bill Payments</h3>
+        <p>Electricity, gas, internet, mobile postpaid and other utility bills — paid on time, every month, without standing in a bank line. Bring the bill, get it settled, keep the paid receipt for your record.</p>
+        <span class="svc-tag">Utilities covered</span>
+      </div>
+
+      <div class="svc-card glass">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 8v8M8 12h8"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <h3>Loans</h3>
+        <p>Guidance and processing support for small mobile-network and digital lending products, including checking eligibility, disbursement, and clearing installments — explained clearly, in person, before you commit.</p>
+        <span class="svc-tag">Advisory + processing</span>
+      </div>
+
+      <div class="svc-card glass">
+        <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+        <h3>All Online Transactions</h3>
+        <p>Anything that would normally need an app or a card — online purchases, fund transfers between accounts, or general digital transactions — handled at the counter for anyone without internet banking access.</p>
+        <span class="svc-tag">One-stop counter</span>
+      </div>
+
+      <div class="svc-card glass" style="border-color:rgba(255,176,32,0.35);">
+        <div class="svc-icon" style="background:linear-gradient(145deg, rgba(255,176,32,0.2), rgba(139,107,255,0.1)); border-color:rgba(255,176,32,0.35);"><svg viewBox="0 0 24 24" stroke="var(--gold)"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></div>
+        <h3>Home-to-Home Visits</h3>
+        <p>Can't make it to the counter? Request a home visit and every service — Easypaisa, JazzCash, bank transfers, bill payments, or loan processing — is brought directly to your door, with the same receipt and confirmation you'd get in person.</p>
+        <span class="svc-tag" style="background:rgba(255,176,32,0.16); color:var(--gold); border-color:rgba(255,176,32,0.4);">Door-step service</span>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ================= PROCESS ================= -->
+<div class="wrap">
+  <section id="process">
+    <div class="section-head">
+      <span class="kicker">How it works</span>
+      <h2>Four steps. No app, no waiting in line.</h2>
+      <p>The process is deliberately simple — built for anyone in Karsal, regardless of how comfortable they are with a smartphone.</p>
+    </div>
+    <div class="process">
+      <div class="step glass">
+        <div class="stepnum">01</div>
+        <h4>Visit the counter</h4>
+        <p>Come in person with your CNIC and the amount or bill you need processed. No appointment needed.</p>
+      </div>
+      <div class="step glass">
+        <div class="stepnum">02</div>
+        <h4>Tell us the service</h4>
+        <p>Easypaisa, JazzCash, a bank transfer, a bill, or a loan installment — just say what you need done.</p>
+      </div>
+      <div class="step glass">
+        <div class="stepnum">03</div>
+        <h4>Transaction is processed</h4>
+        <p>The transfer or payment is entered on the spot through the official network — the same system banks use.</p>
+      </div>
+      <div class="step glass">
+        <div class="stepnum">04</div>
+        <h4>Receipt in hand</h4>
+        <p>You get a confirmation slip or SMS immediately, so there's always a record of what was paid and when.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= WHY ================= -->
+<div class="wrap">
+  <section id="why">
+    <div class="section-head">
+      <span class="kicker">Why people choose this counter</span>
+      <h2>Built on trust that's already local.</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-card glass">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6z"/></svg></div>
+        <div><h4>Officially processed transactions</h4><p>Every payment runs through the real Easypaisa, JazzCash, or bank network — not an off-book workaround. You get the same confirmation the apps themselves would give.</p></div>
+      </div>
+      <div class="why-card glass">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></div>
+        <div><h4>No trip to the city</h4><p>Bank branches and telecom shops are often a drive away. This counter sits inside Karsal itself, saving time, fare, and a day's work for a five-minute transaction.</p></div>
+      </div>
+      <div class="why-card glass">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 12h8M8 16h4"/><rect x="4" y="4" width="16" height="16" rx="2"/></svg></div>
+        <div><h4>A receipt for every rupee</h4><p>Whether it's ten thousand rupees to a son working abroad or a two-hundred-rupee bill, you leave with written or SMS proof of the transaction.</p></div>
+      </div>
+      <div class="why-card glass">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M17 8a3 3 0 1 0 0-6"/><path d="M19 15c2 .5 3 2 3 6"/></svg></div>
+        <div><h4>A neighbour, not a stranger</h4><p>Syed Ali Raza is part of the community — accountable in a way a call-centre agent or an app never can be.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= LOCATION ================= -->
+<div class="wrap">
+  <section id="location">
+    <div class="locality">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Pothohari-Punjabi%20Landscape.JPG" alt="Pothohar plateau landscape near Chakwal, Punjab">
+      <div class="locality-content">
+        <span class="kicker">Find us</span>
+        <h2>Karsal, Chakwal — Pothohar Plateau, Punjab</h2>
+        <p>Set in the rolling farmland of the Pothohar region, Karsal is a village in Chakwal District. The payments counter is easy to find and open to anyone in the surrounding area — no formal appointment required.</p>
+        <div class="locality-badges">
+          <span>&#128205; Karsal, Chakwal, Punjab</span>
+          <span>&#128222; 0340-0863386</span>
+          <span>&#128337; Daily walk-in hours</span>
+          <span>&#127968; Home-to-home visits on request</span>
+        </div>
+      </div>
+    </div>
+    <div class="map-frame glass">
+      <iframe src="https://www.google.com/maps?q=Karsal,%20Chakwal,%20Punjab,%20Pakistan&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</div>
+
+<!-- ================= FAQ ================= -->
+<div class="wrap">
+  <section id="faq">
+    <div class="section-head">
+      <span class="kicker">Questions</span>
+      <h2>Frequently asked questions</h2>
+    </div>
+
+    <details class="faq-item glass" open>
+      <summary>What do I need to bring for a transaction? <span class="plus">+</span></summary>
+      <p>Bring your original CNIC and, if applicable, the bill or account details for the payment you need made. For larger transfers, having the recipient's registered mobile number or account number ready speeds things up.</p>
+    </details>
+
+    <details class="faq-item glass">
+      <summary>Can I use this if I don't have an Easypaisa or JazzCash account? <span class="plus">+</span></summary>
+      <p>Yes. Cash transactions can be processed on your behalf even without a personal wallet account, as long as valid ID is provided — the same way an over-the-counter agent transaction works anywhere in Pakistan.</p>
+    </details>
+
+    <details class="faq-item glass">
+      <summary>Is there a limit on how much I can send or pay? <span class="plus">+</span></summary>
+      <p>Transaction limits follow the same rules set by Easypaisa, JazzCash, and individual banks. Ask at the counter for the current limit on the specific service you need — this can change from time to time.</p>
+    </details>
+
+    <details class="faq-item glass">
+      <summary>How do loan services work here? <span class="plus">+</span></summary>
+      <p>This is an advisory and processing service — checking your eligibility for available digital lending products, helping with the application, and processing disbursement or repayment. Terms and approval always come from the lending provider itself, not the counter.</p>
+    </details>
+
+    <details class="faq-item glass">
+      <summary>Do you visit homes, or only serve the counter? <span class="plus">+</span></summary>
+      <p>Both. If you're unable to come in — due to distance, health, or timing — call or message ahead to arrange a home-to-home visit. The same services and receipts apply, just delivered at your door.</p>
+    </details>
+
+    <details class="faq-item glass">
+      <summary>What are your hours? <span class="plus">+</span></summary>
+      <p>The counter is open daily for walk-in service, with home visits available on request. For urgent transactions outside normal hours, call or message ahead on the number below.</p>
+    </details>
+  </section>
+</div>
+
+<!-- ================= CONTACT ================= -->
+<div class="wrap">
+  <section id="contact">
+    <div class="contact-panel glass">
+      <div>
+        <span class="kicker">Get in touch</span>
+        <h2>Ready when you are.</h2>
+        <p>Stop by the counter in Karsal, or call ahead to confirm a service before you make the trip. Every transaction is handled the same day, with a clear receipt.</p>
+
+        <div class="contact-line">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div><div class="lab">Phone</div><div class="val">0340-0863386</div></div>
+        </div>
+        <div class="contact-line">
+          <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.4"/></svg></div>
+          <div><div class="lab">Address</div><div class="val">Karsal, Chakwal, Punjab</div></div>
+        </div>
+        <div class="contact-line">
+          <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+          <div><div class="lab">Owner</div><div class="val" style="font-family:'Space Grotesk';">Syed Ali Raza</div></div>
+        </div>
+      </div>
+
+      <div class="contact-cta glass">
+        <span class="kicker" style="margin-bottom:2px;">Call directly</span>
+        <div class="big-num">0340-0863386</div>
+        <div class="sub">Available daily · Karsal, Chakwal</div>
+        <a class="btn-primary" href="tel:03400863386">Call Now</a>
+        <a class="btn-ghost" href="https://wa.me/923400863386" target="_blank" rel="noopener">Message on WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">SYED ALI RAZA &mdash; DIGITAL PAYMENTS</div>
+    <p>Karsal, Chakwal, Punjab, Pakistan &middot; 0340-0863386<br>
+    Easypaisa &middot; JazzCash &middot; Bank Payments &middot; Bill Payments &middot; Loans &middot; All Online Transactions</p>
+  </div>
+</footer>
+
+<a class="float-wa" href="https://wa.me/923400863386" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.75 13.4L3 21l3.72-1.24a8.9 8.9 0 0 0 4.33 1.12A8.94 8.94 0 0 0 20 12.93a8.86 8.86 0 0 0-2.4-6.6zm-5.55 13.53a7.4 7.4 0 0 1-3.78-1.04l-.27-.16-2.24.75.75-2.18-.18-.28a7.42 7.42 0 1 1 13.8-3.8 7.4 7.4 0 0 1-8.08 6.71z"/></svg>
+</a>
+
+</body>
+</html>
